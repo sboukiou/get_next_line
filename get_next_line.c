@@ -6,15 +6,16 @@ char	*strdup_newline(char *buffer)
 	char	*line;
 
 	index = 0;
-	while (buffer[index] && buffer[index] != '\n')
+	while (index < BUFFER_SIZE && buffer[index] != '\n')
 		index++;
 	line = calloc(index, sizeof(char));
 	index = 0;
-	while (buffer[index] && buffer[index] != '\n')
+	while (index < BUFFER_SIZE && buffer[index] != '\n')
 	{
 		line[index] = buffer[index];
 		index++;
 	}
+	line[index] = '\0';
 	return (line);
 	
 }
@@ -22,18 +23,20 @@ char	*strdup_newline(char *buffer)
 char *fetch_line(char *buffer, char *line)
 {
 	int	line_len;
-	int	index;
+	int count;
 	if (!buffer)
 		return (NULL);
-	index = 0;
 	if (!line)
 	{
 		line = strdup_newline(buffer);
 		return (line);
 	}
 	line_len = strlen(line);
-	line = realloc(line, line_len + BUFFER_SIZE + 1);
-	strlcat(line, buffer, line_len + BUFFER_SIZE + 1);
+	count = 0;
+	while (buffer[count] && buffer[count] != '\n')
+		count++;
+	line = realloc(line, line_len + count + 2);
+	strlcat(line, buffer, line_len + count + 2);
 	return (line);
 }
 
@@ -47,6 +50,7 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (!buffer)
 	{
+		/*BUFFER_SIZE = 12*/
 		buffer = calloc(BUFFER_SIZE, sizeof(char));
 		count = read(fd, buffer, BUFFER_SIZE);
 		if (count < 0)
@@ -56,11 +60,14 @@ char	*get_next_line(int fd)
 	{
 		line = fetch_line(buffer, line);
 		count = read(fd, buffer, BUFFER_SIZE);
-		if (count < 0)
+		if (count <= 0)
 			return (line);
 	}
 	line = fetch_line(buffer, line);
-	temp = strdup(strchr(buffer, '\n') + 1);
+	if (strchr(buffer, '\n')[1])
+		temp = strdup(strchr(buffer, '\n') + 1);
+	else
+		temp = NULL;
 	free(buffer);
 	buffer = temp;
 	return (line);
