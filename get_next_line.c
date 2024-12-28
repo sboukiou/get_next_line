@@ -43,7 +43,7 @@ char	*get_next_line(int fd)
 		if (index >= count)
 		{
 			count *= 2;
-			line = realloc(line, count);
+			line = _realloc(line, count);
 		}
 		index++;
 	}
