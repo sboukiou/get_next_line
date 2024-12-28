@@ -1,10 +1,5 @@
 #include "get_next_line.h"
 #include <fcntl.h>
-#include <string.h>
-
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1024
-#endif
 
 char	*_realloc(char *line, int size)
 {
