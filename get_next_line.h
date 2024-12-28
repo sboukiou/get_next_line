@@ -8,5 +8,6 @@
 #define BUFFER_SIZE 1024
 #endif
 
+char	*ft_realloc(char *line, int size);
 char *get_next_line(int fd);
 #endif

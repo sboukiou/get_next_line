@@ -1,23 +1,5 @@
 #include "get_next_line.h"
 #include <fcntl.h>
-
-char	*_realloc(char *line, int size)
-{
-	char	*new_line;
-	int		i;
-	new_line = (char *)malloc(sizeof(char) * size);
-	if (!new_line)
-		return (NULL);
-	i = 0;
-	while (line[i])
-	{
-		new_line[i] = line[i];
-		i++;
-	}
-	free(line);
-	return (new_line);
-}
-
 char	*get_next_line(int fd)
 {
 	char	*line;
@@ -38,7 +20,7 @@ char	*get_next_line(int fd)
 		if (index >= count)
 		{
 			count *= 2;
-			line = _realloc(line, count);
+			line = ft_realloc(line, count);
 		}
 		index++;
 	}
