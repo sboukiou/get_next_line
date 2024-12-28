@@ -13,4 +13,5 @@
 
 char	*ft_realloc(char *line, int size);
 char *get_next_line(int fd);
+size_t	ft_strlcat(char *dest, const char *src, size_t size);
 #endif

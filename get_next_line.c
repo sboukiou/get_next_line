@@ -36,7 +36,7 @@ char *fetch_line(char *buffer, char *line)
 	while (buffer[count] && buffer[count] != '\n')
 		count++;
 	line = realloc(line, line_len + count + 2);
-	strlcat(line, buffer, line_len + count + 2);
+	ft_strlcat(line, buffer, line_len + count + 2);
 	return (line);
 }
 
