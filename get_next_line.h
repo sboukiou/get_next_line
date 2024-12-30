@@ -8,7 +8,7 @@
 #include <bsd/string.h>
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 23
 #endif
 
 char	*ft_realloc(char *line, int size);

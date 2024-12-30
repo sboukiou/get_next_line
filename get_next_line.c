@@ -1,73 +1,93 @@
 #include "get_next_line.h"
+#include <stdio.h>
 
-char	*strdup_newline(char *buffer)
+size_t	ft_strlen(char *line)
 {
-	int	index;
-	char	*line;
+	int	i;
 
-	index = 0;
-	while (index < BUFFER_SIZE && buffer[index] != '\n')
-		index++;
-	line = calloc(index, sizeof(char));
-	index = 0;
-	while (index < BUFFER_SIZE && buffer[index] != '\n')
-	{
-		line[index] = buffer[index];
-		index++;
-	}
-	line[index] = '\0';
-	return (line);
-	
+	i = 0;
+	if (line == NULL)
+		return (0);
+	while (line[i])
+		i++;
+	return (i);
 }
 
-char *fetch_line(char *buffer, char *line)
+char	*ft_strchr(const char *s, int c)
+{
+	int	count;
+
+	count = 0;
+	if (!s)
+		return (NULL);
+	while (s[count])
+	{
+		if (s[count] == (unsigned char)c)
+			return ((char *)(s + count));
+		count++;
+	}
+	if ((unsigned char)c == 0)
+		return ((char *)(s + count));
+	return (NULL);
+}
+
+char	*extend_line(char *line, char *buffer)
 {
 	int	line_len;
-	int count;
+	int	count;
+	char	*new_line = NULL;
 	if (!buffer)
-		return (NULL);
-	if (!line)
-	{
-		line = strdup_newline(buffer);
 		return (line);
-	}
-	line_len = strlen(line);
 	count = 0;
 	while (buffer[count] && buffer[count] != '\n')
 		count++;
-	line = realloc(line, line_len + count + 2);
-	ft_strlcat(line, buffer, line_len + count + 2);
-	return (line);
+	line_len = ft_strlen(line);
+	new_line = calloc(line_len + count + 2, sizeof(char));
+	count = 0;
+	if (line)
+	{
+		while (line[count])
+		{
+			new_line[count] = line[count];
+			count++;
+		}
+	}
+	int	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+	{
+		new_line[count] = buffer[i];
+		i++;
+		count++;
+	}
+	if (buffer[i] == '\n')
+		new_line[count] = '\n';
+	free(line);
+	return (new_line);
 }
-
 
 char	*get_next_line(int fd)
 {
 	static char	*buffer;
-	char		*line;
-	char		*temp;
-	int			count;
-	line = NULL;
+	char	*line = NULL;
+	int	line_read;
+
 	if (!buffer)
 	{
-		/*BUFFER_SIZE = 12*/
-		buffer = calloc(BUFFER_SIZE, sizeof(char));
-		count = read(fd, buffer, BUFFER_SIZE);
-		if (count < 0)
-			return (line);
+		buffer = calloc(BUFFER_SIZE + 1, sizeof(char));
+		if (!buffer)
+			return (NULL);
 	}
-	while (!strchr(buffer, '\n'))
+	while (strchr(buffer, '\n') == NULL)
 	{
-		line = fetch_line(buffer, line);
-		count = read(fd, buffer, BUFFER_SIZE);
-		if (count <= 0)
+		line = extend_line(line, buffer);
+		line_read = read(fd, buffer, BUFFER_SIZE);
+		if (line_read <= 0)
 			return (line);
 	}
-	line = fetch_line(buffer, line);
-	if (strchr(buffer, '\n')[1])
-		temp = strdup(strchr(buffer, '\n') + 1);
-	else
-		temp = NULL;
+	line = extend_line(line, buffer);
+	char *temp = strchr(buffer, '\n');
+	if (temp + 1)
+		temp = strdup(temp + 1);
 	free(buffer);
 	buffer = temp;
 	return (line);
