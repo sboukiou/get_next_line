@@ -36,7 +36,7 @@ char	*extend_line(char *line, char *buffer)
 	int	line_len;
 	int	count;
 	char	*new_line = NULL;
-	if (!buffer)
+	if (ft_strlen(buffer) == 0)
 		return (line);
 	count = 0;
 	while (buffer[count] && buffer[count] != '\n')
@@ -70,6 +70,8 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char	*line = NULL;
 	int	line_read;
+	char *temp;
+	char	*new_buffer;
 
 	if (!buffer)
 	{
@@ -77,18 +79,29 @@ char	*get_next_line(int fd)
 		if (!buffer)
 			return (NULL);
 	}
-	while (strchr(buffer, '\n') == NULL)
+	while (ft_strchr(buffer, '\n') == NULL)
 	{
 		line = extend_line(line, buffer);
 		line_read = read(fd, buffer, BUFFER_SIZE);
+		buffer[line_read] = '\0';
 		if (line_read <= 0)
+		{
+			if (buffer)
+			{
+				free(buffer);
+				buffer = NULL;
+			}
 			return (line);
+		}
 	}
 	line = extend_line(line, buffer);
-	char *temp = strchr(buffer, '\n');
-	if (temp + 1)
-		temp = strdup(temp + 1);
-	free(buffer);
-	buffer = temp;
+	temp = ft_strchr(buffer, '\n');
+	 if (temp)
+	{
+		new_buffer = calloc(BUFFER_SIZE + 1, sizeof(char));
+		strlcpy(new_buffer, temp + 1, ft_strlen(temp + 1));
+		free(buffer);
+		buffer = new_buffer;
+	}
 	return (line);
 }

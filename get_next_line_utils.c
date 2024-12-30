@@ -18,3 +18,24 @@ char	*ft_realloc(char *line, int size)
 	return (new_line);
 }
 
+char	*ft_strdup(char *str)
+{
+	char *buff;
+	int	idx;
+
+	if (!str)
+		return (NULL);
+	idx = 0;
+	while (str[idx])
+		idx++;
+	buff = calloc(idx + 1, sizeof(char));
+	if (!buff)
+		return (NULL);
+	idx = 0;
+	while (str[idx])
+	{
+		buff[idx] = str[idx];
+		idx++;
+	}
+	return (buff);
+}
