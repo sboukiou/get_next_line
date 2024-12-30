@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 	 if (temp)
 	{
 		new_buffer = calloc(BUFFER_SIZE + 1, sizeof(char));
-		strlcpy(new_buffer, temp + 1, ft_strlen(temp + 1));
+		strcpy(new_buffer, temp + 1);
 		free(buffer);
 		buffer = new_buffer;
 	}
