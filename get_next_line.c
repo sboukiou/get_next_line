@@ -39,7 +39,7 @@ char	*get_next_line(int fd)
 	while (!ft_strchr(buffer, '\n'))
 	{
 		line = extend_line(line, buffer);
-		if (!line)
+		if (!line || !*line)
 			return (free(buffer), buffer = NULL, NULL);
 		if (read(fd, buffer, BUFFER_SIZE) <= 0)
 			return (free(buffer), buffer = NULL, line);
