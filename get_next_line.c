@@ -29,6 +29,8 @@ char	*get_next_line(int fd)
 	char	*temp;
 	char	*new_buffer;
 
+	if (BUFFER_SIZE < 0 || fd < 0)
+		return (NULL);
 	line = NULL;
 	if (!buffer)
 	{
