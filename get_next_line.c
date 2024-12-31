@@ -31,6 +31,8 @@ char	*get_next_line(int fd)
 
 	if (BUFFER_SIZE < 0 || fd < 0)
 		return (NULL);
+	if (read(fd, 0, 0) <= 0)
+		return (NULL);
 	line = NULL;
 	if (!buffer)
 	{
