@@ -14,33 +14,12 @@ char	*ft_realloc(char *line, int size)
 		new_line[i] = line[i];
 		i++;
 	}
+	new_line[i] = '\0';
 	free(line);
 	return (new_line);
 }
 
-char	*ft_strdup(char *str)
-{
-	char *buff;
-	int	idx;
-
-	if (!str)
-		return (NULL);
-	idx = 0;
-	while (str[idx])
-		idx++;
-	buff = calloc(idx + 1, sizeof(char));
-	if (!buff)
-		return (NULL);
-	idx = 0;
-	while (str[idx])
-	{
-		buff[idx] = str[idx];
-		idx++;
-	}
-	return (buff);
-}
-
-size_t	ft_strlen(char *line)
+size_t	ft_strlen(const char *line)
 {
 	int	i;
 
