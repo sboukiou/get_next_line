@@ -33,7 +33,7 @@ char	*get_next_line(int fd)
 			return (NULL);
 	}
 
-	if (buffer && read(fd, buffer, 0) < 0)
+	if (buffer && read(fd, buffer, 0) <= 0)
 		return (free(buffer), NULL);
 	line = NULL;
 	while (!ft_strchr(buffer, '\n'))
