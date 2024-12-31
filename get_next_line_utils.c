@@ -39,3 +39,33 @@ char	*ft_strdup(char *str)
 	}
 	return (buff);
 }
+
+size_t	ft_strlen(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line == NULL)
+		return (0);
+	while (line[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	count;
+
+	count = 0;
+	if (!s)
+		return (NULL);
+	while (s[count])
+	{
+		if (s[count] == (unsigned char)c)
+			return ((char *)(s + count));
+		count++;
+	}
+	if ((unsigned char)c == 0)
+		return ((char *)(s + count));
+	return (NULL);
+}
