@@ -16,7 +16,7 @@ char	*extend_line(char *line, char *buffer)
 		return (NULL);
 	if (line)
 		strcpy(new_line, line);
-	strlcat(new_line, buffer, ft_strlen(new_line) + idx + 2);
+	ft_strlcat(new_line, buffer, ft_strlen(new_line) + idx + 2);
 	free(line);
 	return (new_line);
 }
