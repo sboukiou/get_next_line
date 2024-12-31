@@ -41,10 +41,12 @@ char	*get_next_line(int fd)
 		line = extend_line(line, buffer);
 		if (!line)
 			return (free(buffer), buffer = NULL, NULL);
-		if (!(*line))
-			return (free(buffer), buffer = NULL, NULL);
 		if (read(fd, buffer, BUFFER_SIZE) <= 0)
+		{
+			if (!(*line))
+				return (free(buffer), free(line), buffer = NULL, NULL);
 			return (free(buffer), buffer = NULL, line);
+		}
 	}
 	line = extend_line(line, buffer);
 	if (!line)
