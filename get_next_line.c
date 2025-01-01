@@ -9,9 +9,10 @@ char	*reset_buffer(char *buffer)
 	if (!ft_strlen(buffer))
 		return (buffer);
 	temp = ft_strchr(buffer, '\n');
-	new_buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	new_buffer = NULL;
 	if (temp && temp[1] != '\0')
 	{
+		new_buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 		ft_strlcpy(new_buffer, temp + 1, ft_strlen(temp + 1) + 1);
 	}
 	free(buffer);
@@ -35,7 +36,12 @@ char	*get_next_line(int file_d)
 	}
 	line = NULL;
 	if (ft_strlen(buffer))
+	{
 		line = extend_line(line, buffer);
+		buffer = reset_buffer(buffer);
+		if (ft_strchr(line, '\n'))
+			return (line);
+	}
 	lines_read = read(file_d, buffer, BUFFER_SIZE);
 	if (lines_read < 1)
 	{
