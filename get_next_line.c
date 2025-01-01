@@ -1,67 +1,57 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-char	*reset_buffer(char *buffer)
+char	*get_full_buffer(char *buffer, int	fd)
 {
-	char	*temp;
-	char	*new_buffer;
+	int		lines_read;
 
-	if (!ft_strlen(buffer))
-		return (buffer);
-	temp = ft_strchr(buffer, '\n');
-	new_buffer = NULL;
-	if (temp && temp[1] != '\0')
+	while (ft_strchr(buffer, NEWL) == NULL)
 	{
-		new_buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-		ft_strlcpy(new_buffer, temp + 1, ft_strlen(temp + 1) + 1);
+		buffer = ft_realloc(buffer, ft_strlen(buffer) + BUFFER_SIZE + 1);
+		if (!buffer)
+			return (NULL);
+
+		lines_read = read(fd, buffer + ft_strlen(buffer), BUFFER_SIZE);
+		if (lines_read < 1)
+			return (buffer);
 	}
-	free(buffer);
-	buffer = NULL;
-	
-	return (new_buffer);
+	/*printf("This is the buffer --> |%s|\n", buffer);*/
+	return (buffer);
 }
+
+char    *reset_buffer(char *buffer)
+{
+        char    *temp;
+        char    *new_buffer;
+
+        if (!ft_strlen(buffer))
+                return (buffer);
+        temp = ft_strchr(buffer, '\n');
+		new_buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+        if (temp && temp[1] != '\0')
+                ft_strlcpy(new_buffer, temp + 1, ft_strlen(temp + 1) + 1);
+        free(buffer);
+        buffer = NULL;
+        return (new_buffer);
+}
+
 
 
 char	*get_next_line(int file_d)
 {
 	char		*line;
 	static char	*buffer;
-	int			lines_read;
 
-	if (!buffer)
-	{
-		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-		if (!buffer)
-			return (NULL);
-	}
 	line = NULL;
-	if (ft_strlen(buffer))
-	{
-		line = extend_line(line, buffer);
-		buffer = reset_buffer(buffer);
-		if (ft_strchr(line, '\n'))
-			return (line);
-	}
-	lines_read = read(file_d, buffer, BUFFER_SIZE);
-	if (lines_read < 1)
-	{
-		free(buffer);
-		buffer = NULL;
-		return (line);
-	}
-	while (ft_strchr(buffer, '\n') == NULL)
-	{
-		line = extend_line(line, buffer);
-		buffer = reset_buffer(buffer);
-		lines_read = read(file_d, buffer, BUFFER_SIZE);
-		if (lines_read < 1)
-		{
-			free(buffer);
-			buffer = NULL;
-			return (line);
-		}
-	}
+	if (!buffer)
+		buffer = get_full_buffer(buffer, file_d);
+	if (!buffer)
+		return (NULL);
+	printf("Buffer here |%s|\n", buffer);
 	line = extend_line(line, buffer);
 	buffer = reset_buffer(buffer);
+
+	if (!ft_strlen(buffer))
+		free(buffer), buffer =  NULL;
 	return (line);
 }

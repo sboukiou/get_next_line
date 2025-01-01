@@ -5,11 +5,13 @@ char	*ft_realloc(char *line, int size)
 {
 	char	*new_line;
 	int		i;
-	new_line = (char *)malloc(sizeof(char) * size);
+	new_line = (char *)ft_calloc(size, sizeof(char));
 	if (!new_line)
 		return (NULL);
+	if (!line)
+		return (new_line);
 	i = 0;
-	while (line[i])
+	while (line && line[i])
 	{
 		new_line[i] = line[i];
 		i++;

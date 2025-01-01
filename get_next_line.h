@@ -11,6 +11,8 @@
 #define BUFFER_SIZE 23
 #endif
 
+#define NEWL '\n'
+
 char *get_next_line(int fd);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*extend_line(char *line, char *buffer);
