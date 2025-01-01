@@ -106,7 +106,7 @@ char	*extend_line(char *line, char *buffer)
 {
 	int	idx;
 
-	if (!buffer)
+	if (!buffer || !ft_strlen(buffer))
 		return (line);
 	idx = 0;
 	while (buffer[idx] && buffer[idx] != '\n')
