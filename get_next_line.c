@@ -23,6 +23,7 @@ char    *reset_buffer(char *buffer)
         char    *temp;
         char    *new_buffer;
 
+		new_buffer = NULL;
         if (!ft_strlen(buffer))
                 return (buffer);
         temp = ft_strchr(buffer, '\n');
