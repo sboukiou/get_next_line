@@ -7,7 +7,7 @@ char	*get_full_buffer(char *buffer, int	fd)
 
 	while (ft_strchr(buffer, NEWL) == NULL)
 	{
-		buffer = ft_realloc(buffer, ft_strlen(buffer) + BUFFER_SIZE + 1);
+		buffer = ft_realloc(buffer, (ft_strlen(buffer) + BUFFER_SIZE + 1) * sizeof(char));
 		if (!buffer)
 			return (NULL);
 
@@ -15,7 +15,6 @@ char	*get_full_buffer(char *buffer, int	fd)
 		if (lines_read < 1)
 			return (buffer);
 	}
-	/*printf("This is the buffer --> |%s|\n", buffer);*/
 	return (buffer);
 }
 
@@ -43,11 +42,9 @@ char	*get_next_line(int file_d)
 	static char	*buffer;
 
 	line = NULL;
-	if (!buffer)
-		buffer = get_full_buffer(buffer, file_d);
+	buffer = get_full_buffer(buffer, file_d);
 	if (!buffer)
 		return (NULL);
-	printf("Buffer here |%s|\n", buffer);
 	line = extend_line(line, buffer);
 	buffer = reset_buffer(buffer);
 
