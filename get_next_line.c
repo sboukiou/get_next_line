@@ -41,6 +41,8 @@ char	*get_next_line(int file_d)
 	char		*line;
 	static char	*buffer;
 
+	if (file_d < 0 || BUFFER_SIZE < 0)
+		return (NULL);
 	line = NULL;
 	buffer = get_full_buffer(buffer, file_d);
 	if (!buffer)
