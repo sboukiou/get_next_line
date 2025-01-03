@@ -46,11 +46,10 @@ char	*get_next_line(int file_d)
 
 	if (file_d < 0 || BUFFER_SIZE < 0)
 		return (NULL);
-	line = NULL;
 	buffer = get_full_buffer(buffer, file_d);
 	if (!buffer)
 		return (NULL);
-	line = extend_line(line, buffer);
+	line = extend_line(buffer);
 	buffer = reset_buffer(buffer);
 
 	if (!ft_strlen(buffer))

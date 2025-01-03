@@ -104,24 +104,19 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	return (srclen);
 }
 
-char	*extend_line(char *line, char *buffer)
+char	*extend_line(char *buffer)
 {
 	int	idx;
+	char	*line;
 
-	if (!buffer || !ft_strlen(buffer))
-		return (line);
+	if (!buffer)
+		return (NULL);
 	idx = 0;
 	while (buffer[idx] && buffer[idx] != '\n')
 		idx++;
-	if (line)
-	{
-		line = ft_realloc(line, ft_strlen(line) + idx + 2);
-		ft_strlcat(line, buffer, ft_strlen(line) + idx + 2);
-	}
-	else
-	{
-		line = (char *)calloc(idx + 2, sizeof(char));
-		ft_strlcpy(line, buffer, idx + 2);
-	}
+	if (ft_strchr(buffer, NEWL))
+		idx++;
+	line = (char *)calloc(idx + 1, sizeof(char));
+	ft_strlcpy(line, buffer, idx + 1);
 	return (line);
 }
