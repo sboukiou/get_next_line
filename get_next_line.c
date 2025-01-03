@@ -53,6 +53,6 @@ char	*get_next_line(int file_d)
 	buffer = reset_buffer(buffer);
 
 	if (!ft_strlen(buffer))
-		return (free(buffer), buffer =  NULL, NULL);
+		free(buffer), buffer =  NULL;
 	return (line);
 }
