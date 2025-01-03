@@ -46,8 +46,6 @@ char	*get_next_line(int file_d)
 
 	if (file_d < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (BUFFER_SIZE * 2 / 2 != BUFFER_SIZE)
-		return (NULL);
 	buffer = get_full_buffer(buffer, file_d);
 	if (!buffer || !ft_strlen(buffer))
 		return (NULL);
