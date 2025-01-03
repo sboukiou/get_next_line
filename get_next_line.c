@@ -27,9 +27,11 @@ char    *reset_buffer(char *buffer)
         if (!ft_strlen(buffer))
                 return (buffer);
         temp = ft_strchr(buffer, '\n');
-		new_buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
         if (temp && temp[1] != '\0')
-                ft_strlcpy(new_buffer, temp + 1, ft_strlen(temp + 1) + 1);
+		{
+			new_buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+			ft_strlcpy(new_buffer, temp + 1, ft_strlen(temp + 1) + 1);
+		}
         free(buffer);
         buffer = NULL;
         return (new_buffer);
