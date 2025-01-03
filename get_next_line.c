@@ -48,11 +48,11 @@ char	*get_next_line(int file_d)
 		return (NULL);
 	buffer = get_full_buffer(buffer, file_d);
 	if (!buffer || !ft_strlen(buffer))
-		return (NULL);
+		return (free(buffer), buffer =  NULL, NULL);
 	line = extend_line(buffer);
 	buffer = reset_buffer(buffer);
 
 	if (!ft_strlen(buffer))
-		free(buffer), buffer =  NULL;
+		return (free(buffer), buffer =  NULL, NULL);
 	return (line);
 }
