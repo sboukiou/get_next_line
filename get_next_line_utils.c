@@ -1,7 +1,7 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 
-char	*ft_realloc(char *line, int size)
+char	*ft_realloc(char *line, size_t size)
 {
 	char	*new_line;
 	int		i;
@@ -116,7 +116,7 @@ char	*extend_line(char *buffer)
 		idx++;
 	if (ft_strchr(buffer, NEWL))
 		idx++;
-	line = (char *)calloc(idx + 1, sizeof(char));
+	line = (char *)ft_calloc(idx + 1, sizeof(char));
 	ft_strlcpy(line, buffer, idx + 1);
 	return (line);
 }
