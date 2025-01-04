@@ -38,13 +38,16 @@ char    *reset_buffer(char *buffer)
 }
 
 
+#define MAX_FD 1025
 
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*buffer[1024];
+	static char	*buffer[1025];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (fd > 1023)
 		return (NULL);
 	buffer[fd] = get_full_buffer(buffer[fd], fd);
 	if (!buffer[fd] || !ft_strlen(buffer[fd]))
