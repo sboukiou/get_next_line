@@ -13,7 +13,10 @@ char	*fill_buffer(char *buffer, int fd)
 		if (!buffer)
 			return (NULL);
 		lines_read = read(fd, buffer + buffer_len, BUFFER_SIZE);
-		buffer[lines_read + buffer_len] = '\0';
+		if (lines_read >= 0)
+			buffer[lines_read + buffer_len] = '\0';
+		else
+			buffer[buffer_len] = '\0';
 		if (lines_read < 1)
 			return (buffer);
 		buffer_len += lines_read;
