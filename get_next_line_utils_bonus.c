@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sboukiou <sboukiou@1337.ma>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/08 00:35:28 by sboukiou          #+#    #+#             */
+/*   Updated: 2025/01/08 00:35:29 by sboukiou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 
 char	*ft_realloc(char *line, size_t size)
 {
 	char	*new_line;
 	int		i;
+
 	new_line = (char *)malloc(sizeof(char) * size);
 	if (!new_line)
 		return (NULL);

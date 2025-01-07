@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sboukiou <sboukiou@1337.ma>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/08 00:35:15 by sboukiou          #+#    #+#             */
+/*   Updated: 2025/01/08 00:35:17 by sboukiou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 char	*fill_buffer(char *buffer, int fd)
 {
 	size_t	buffer_len;
 	ssize_t	lines_read;
-	
 
 	buffer_len = ft_strlen(buffer, '\0');
 	while (ft_strchr(buffer, NEWL) == NULL)
@@ -27,7 +38,7 @@ char	*fill_buffer(char *buffer, int fd)
 char	*extract_line(char *buffer)
 {
 	char	*line;
-	int	line_len;
+	int		line_len;
 
 	if (!buffer || !ft_strlen(buffer, '\0'))
 		return (NULL);
@@ -53,7 +64,7 @@ char	*reset_buffer(char *buffer)
 		if (!new_buffer)
 			return (free(buffer), buffer = NULL, NULL);
 		ft_strlcpy(new_buffer, temp + 1, temp_len + 1);
-		free(buffer), buffer = NULL;
+		free(buffer);
 		return (new_buffer);
 	}
 	free(buffer);
@@ -71,7 +82,7 @@ char	*get_next_line(int fd)
 	if (fd > 1024)
 		return (NULL);
 	buffers[fd] = fill_buffer(buffers[fd], fd);
-	if (!buffers[fd]  || !ft_strlen(buffers[fd], '\0'))
+	if (!buffers[fd] || !ft_strlen(buffers[fd], '\0'))
 		return (free(buffers[fd]), buffers[fd] = NULL, NULL);
 	line = extract_line(buffers[fd]);
 	if (!line)
