@@ -1,5 +1,4 @@
-#include "get_next_line.h"
-#include <fcntl.h>
+#include <stdlib.h>
 
 char	*ft_realloc(char *line, int size)
 {
@@ -18,24 +17,33 @@ char	*ft_realloc(char *line, int size)
 	return (new_line);
 }
 
-char	*ft_strdup(char *str)
+size_t	ft_strlen(char *line)
 {
-	char *buff;
-	int	idx;
+	int	i;
 
-	if (!str)
-		return (NULL);
-	idx = 0;
-	while (str[idx])
-		idx++;
-	buff = calloc(idx + 1, sizeof(char));
-	if (!buff)
-		return (NULL);
-	idx = 0;
-	while (str[idx])
-	{
-		buff[idx] = str[idx];
-		idx++;
-	}
-	return (buff);
+	i = 0;
+	if (line == NULL)
+		return (0);
+	while (line[i])
+		i++;
+	return (i);
 }
+
+char	*ft_strchr(const char *s, int c)
+{
+	int	count;
+
+	count = 0;
+	if (!s)
+		return (NULL);
+	while (s[count])
+	{
+		if (s[count] == (unsigned char)c)
+			return ((char *)(s + count));
+		count++;
+	}
+	if ((unsigned char)c == 0)
+		return ((char *)(s + count));
+	return (NULL);
+}
+
