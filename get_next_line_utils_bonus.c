@@ -17,7 +17,7 @@ char	*ft_realloc(char *line, size_t size)
 	char	*new_line;
 	int		i;
 
-	new_line = (char *)malloc(sizeof(char) * size);
+	new_line = (char *)malloc((size_t)(sizeof(char) * size));
 	if (!new_line)
 		return (NULL);
 	i = 0;
