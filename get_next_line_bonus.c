@@ -60,18 +60,6 @@ char	*reset_buffer(char *buffer)
 	buffer = NULL;
 	return (NULL);
 }
-void	free_all(char **buffers)
-{
-	int	i;
-
-	i = 0;
-	while (buffers[i])
-	{
-		free(buffers[i]);
-		buffers[i] = NULL;
-		i++;
-	}
-}
 
 char	*get_next_line(int fd)
 {
@@ -84,10 +72,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buffers[fd] = fill_buffer(buffers[fd], fd);
 	if (!buffers[fd]  || !ft_strlen(buffers[fd], '\0'))
-		return (free_all(buffers), buffers[fd] = NULL, NULL);
+		return (free(buffers[fd]), buffers[fd] = NULL, NULL);
 	line = extract_line(buffers[fd]);
 	if (!line)
-		return (free_all(buffers), buffers[fd] = NULL, NULL);
+		return (free(buffers[fd]), buffers[fd] = NULL, NULL);
 	buffers[fd] = reset_buffer(buffers[fd]);
 	return (line);
 }
