@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-char	*ft_realloc(char *line, int size)
+char	*ft_realloc(char *line, size_t size)
 {
 	char	*new_line;
 	int		i;
@@ -8,6 +8,8 @@ char	*ft_realloc(char *line, int size)
 	if (!new_line)
 		return (NULL);
 	i = 0;
+	if (!line)
+		return (new_line);
 	while (line[i])
 	{
 		new_line[i] = line[i];
@@ -17,14 +19,16 @@ char	*ft_realloc(char *line, int size)
 	return (new_line);
 }
 
-size_t	ft_strlen(char *line)
+size_t	ft_strlen(const char *line, char specifier)
 {
 	int	i;
 
 	i = 0;
 	if (line == NULL)
 		return (0);
-	while (line[i])
+	while (line[i] && line[i] != specifier)
+		i++;
+	if (specifier && line[i] == specifier)
 		i++;
 	return (i);
 }
@@ -47,3 +51,20 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
+size_t	ft_strlcpy(char *dest, const char *src, size_t size)
+{
+	unsigned int	srclen;
+	unsigned int	count;
+
+	srclen = ft_strlen(src, '\0');
+	if (size == 0)
+		return (srclen);
+	count = 0;
+	while (count < size - 1 && src[count])
+	{
+		dest[count] = src[count];
+		count++;
+	}
+	dest[count] = '\0';
+	return (srclen);
+}

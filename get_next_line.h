@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <bsd/string.h>
+#include <stdio.h>
 
 /*Defining buffer_size and other macros*/
 #ifndef BUFFER_SIZE
@@ -19,7 +20,8 @@
 char *get_next_line(int fd);
 
 /*Utils prototypes*/
-size_t	ft_strlen(char *line);
+size_t	ft_strlen(char *line, char specifier);
 char	*ft_realloc(char *line, int size);
 char	*ft_strchr(const char *s, int c);
+size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 #endif
